@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.igenerat.dao.ProduceDao">
+    <delete id="deleteProduce">
+        delete from produce
+        where p_id=#{pid} and id=#{id} and `date`=#{date}
+    </delete>
+
+    <select id="findProduce" resultType="java.util.HashMap">
+        select produce.p_id as pid,produce.id as id,`date`, product.product as pname,`name`,`number`
+        from produce
+        inner join product on produce.p_id=product.p_id
+        inner join employee on produce.id=employee.id
+        <where>
+            <if test="pname!=null and pname!='' ">
+                product.product like CONCAT('%',#{pname},'%')
+            </if>
+            <if test="name!=null and name!='' ">
+                and `name` like CONCAT('%',#{name},'%')
+            </if>
+        </where>
+
+    </select>
+</mapper>

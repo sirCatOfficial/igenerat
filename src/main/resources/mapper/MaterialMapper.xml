@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.igenerat.dao.MaterialDao">
+    <insert id="insertMaterial">
+        INSERT INTO material (material, inventory, unit)
+        VALUES (#{name}, #{inventory}, #{unit})
+    </insert>
+    <update id="updateMaterial">
+        UPDATE material
+        SET material = #{name},
+            inventory = #{inventory},
+            unit = #{unit}
+        WHERE m_id = #{id}
+    </update>
+    <delete id="deleteMaterial">
+        DELETE FROM material
+        WHERE m_id = #{id}
+    </delete>
+
+    <select id="findMaterialByName" resultType="com.business.igenerat.pojo.Material">
+        SELECT m_id as id,material as name,inventory,unit FROM material
+        <where>
+            <if test="material != null and material != ''">
+                material LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+    <update id="addMaterial">
+        update material set inventory=inventory+ #{number}
+        where m_id= #{id}
+    </update>
+</mapper>

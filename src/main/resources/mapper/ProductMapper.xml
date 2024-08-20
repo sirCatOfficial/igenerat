@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.igenerat.dao.ProductDao">
+
+    <insert id="insertProduct">
+        insert into product (product,inventory,price,unit) values (#{name},0,#{price},#{unit} )
+    </insert>
+    <insert id="insertProduce">
+        insert into produce values (#{pid},#{id},#{date},#{number})
+    </insert>
+    <update id="addProduct">
+        update product set inventory=inventory+ #{number}
+        where p_id= #{id}
+    </update>
+    <update id="updateProduct">
+        update product set product=#{name},unit=#{unit},price=#{price}
+        where p_id=#{id}
+    </update>
+    <delete id="deleteProduct">
+        delete from product where p_id=#{id}
+    </delete>
+    <select id="findProducts" resultType="com.business.igenerat.pojo.Product">
+        select p_id as id,product as name,inventory,unit,price
+        from product
+        <where>
+            <if test="name!=null and name!=''">
+                product like CONCAT('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findProduct" resultType="com.business.igenerat.pojo.Product">
+        select * from product
+        where p_id=#{id}
+    </select>
+
+
+</mapper>

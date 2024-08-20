@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.igenerat.dao.EmployeeDao">
+    <insert id="addEmployee">
+        insert into employee (j_id,`name`) values  (#{jid},#{name})
+    </insert>
+    <update id="initEmployee">
+        update employee set phone=#{phone} , password=#{password}
+        where id=#{id}
+    </update>
+    <update id="updateEmployee">
+        update employee set name=#{employee.name},j_id=#{jid}
+        where id=#{employee.id}
+    </update>
+    <update id="updateMyself">
+        update  employee set name=#{name},password=#{password}
+        where id=#{id}
+    </update>
+    <update id="updatePhone">
+        update employee set phone=#{phone}
+        where id=#{id}
+    </update>
+    <delete id="deleteEmployee">
+        delete from employee where id=#{id}
+    </delete>
+    <select id="login" resultType="java.util.HashMap">
+        select * from employee where phone=#{phone}
+    </select>
+    <select id="findById" resultType="com.business.igenerat.pojo.Employee">
+        select * from employee
+        where id=#{id}
+    </select>
+    <select id="findEmployees" resultType="java.util.HashMap">
+        select id,name,phone,j_id as jid
+        from employee
+        <where>
+            <if test="name!=null and name!=''">
+                name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="jid!=null">
+                and j_id=#{jid}
+            </if>
+        </where>
+    </select>
+</mapper>

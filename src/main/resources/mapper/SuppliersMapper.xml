@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.igenerat.dao.SuppliersDao">
+    <!-- 插入数据 -->
+    <insert id="insertSupplier" parameterType="java.lang.String">
+        INSERT INTO suppliers (suppliers) VALUES (#{name})
+    </insert>
+
+    <!-- 根据ID删除数据 -->
+    <delete id="deleteSupplierById" parameterType="int">
+        DELETE FROM suppliers WHERE s_id = #{id}
+    </delete>
+
+    <!-- 更新数据 -->
+    <update id="updateSupplier" parameterType="map">
+        UPDATE suppliers SET suppliers = #{name} WHERE s_id = #{id}
+    </update>
+
+    <!-- 查询数据 -->
+    <select id="getSupplierById" parameterType="int" resultType="java.lang.String">
+        SELECT suppliers FROM suppliers WHERE s_id = #{id}
+    </select>
+    <select id="findSuppliers" resultType="java.util.HashMap">
+        SELECT s_id as id,suppliers as name FROM suppliers
+        <where>
+            <if test="suppliers != null and suppliers != ''">
+                suppliers LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+
+    </select>
+</mapper>

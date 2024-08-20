@@ -1,0 +1,71 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+body{
+    background-color: rgba(230, 230, 230, 0.6);
+}
+#register_bg {
+    background-color: #fff;
+    margin: 100px auto;
+    width: 800px;
+    height: 700px;
+    border-radius: 15px;
+    /* border: 1px solid red; */
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    position: relative;
+}
+#register_form {
+    width: 300px;
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    left: 10%;
+}
+#register_info{
+    width: 600px;
+    height: 80px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+}
+#register_info_title{
+    width: 500px;
+    position: absolute;
+    height: 41px;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+}
+#register_info_title h1{
+    text-align: center;
+    color: rgba(0, 155, 255, 0.6);
+    position: absolute;
+    left: 50px;
+}
+#register_info_title img{
+    position: absolute;
+}
+#tologin{
+    color: red;
+}
+#register_ewm{
+    position: absolute;
+    top: 20%;
+    right: 15%;
+}

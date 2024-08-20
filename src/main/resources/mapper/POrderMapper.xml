@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- p_order表的Mapper XML定义 -->
+<mapper namespace="com.business.igenerat.dao.POrderDao">
+    <update id="updatePOrder">
+        update `p_order` set
+        <if test="order.delivery==null">
+            m_id=#{mid},s_id=#{sid},number=#{order.number},amount=#{order.amount}
+        </if>
+        <if test="order.delivery!=null">
+            delivery=#{order.delivery},payment=#{order.payment}
+        </if>
+
+        where p_o_id=#{order.id}
+    </update>
+    <select id="findPOrderById" resultType="java.util.HashMap">
+        select id as eid,m_id as mid,`number`,delivery,payment
+        from `p_order`
+        where p_o_id=#{id}
+    </select>
+    <!-- 根据条件查询p_order表，并添加suppliers.suppliers和material.material属性 -->
+    <select id="findPOrders" parameterType="map" resultType="java.util.HashMap">
+        SELECT p_o_id as id,p_order.s_id as sid,p_order.m_id as mid,`number`,amount,delivery,payment, suppliers.suppliers as sname, material.material as mname
+        FROM p_order
+        JOIN suppliers ON p_order.s_id = suppliers.s_id
+        JOIN material ON p_order.m_id = material.m_id
+        <where>
+            <if test="sName != null and sName != ''">
+                and suppliers.suppliers LIKE CONCAT('%', #{sName}, '%')
+            </if>
+            <if test="mName != null and mName != ''">
+                and material.material LIKE CONCAT('%', #{mName}, '%')
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+        </where>
+    </select>
+    <delete id="deletePOrder">
+        delete from `p_order` where p_o_id=#{id}
+    </delete>
+    <insert id="insertPOrder">
+        insert into `p_order`
+        (m_id,s_id,id,`number`,amount,delivery,payment) values (#{mid},#{sid},#{eid},#{order.number},#{order.amount},#{order.delivery},#{order.payment})
+    </insert>
+</mapper>

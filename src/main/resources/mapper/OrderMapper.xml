@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.igenerat.dao.OrderDao">
+
+    <insert id="insertOrder">
+        insert into `order`
+        (p_id,c_id,id,`number`,amount,delivery,payment) values (#{pid},#{cid},#{eid},#{order.number},#{order.amount},#{order.delivery},#{order.payment})
+    </insert>
+    <update id="updateOrder">
+        update `order` set
+        <if test="order.delivery==null">
+            p_id=#{pid},c_id=#{cid},number=#{order.number},amount=#{order.amount}
+        </if>
+        <if test="order.delivery!=null">
+            delivery=#{order.delivery},payment=#{order.payment}
+        </if>
+
+        where o_id=#{order.id}
+    </update>
+    <delete id="deleteOrder">
+        delete from `order` where o_id=#{id}
+    </delete>
+    <select id="findOrder" resultType="java.util.HashMap">
+        select o_id as id,order.p_id as pid,order.c_id as cid,product.product as pname,customer.custer as cname,`number`,amount,delivery,payment
+        from `order`
+        inner join product on `order`.p_id=product.p_id
+        inner join customer on `order`.c_id=customer.c_id
+        <where>
+
+            <if test="pname!=null and pname!=''">
+                product.product like CONCAT('%',#{pname},'%')
+            </if>
+
+            <if test="cname!=null and cname!='' ">
+                and
+                customer.custer like CONCAT('%',#{cname},'%')
+            </if>
+    </where>
+    </select>
+    <select id="findOrderById" resultType="java.util.HashMap">
+        select id as eid,p_id as pid,`number`,delivery,payment
+        from `order`
+        where o_id=#{id}
+    </select>
+    <select id="findMyOrder" resultType="java.util.HashMap">
+        select o_id as id,order.p_id as pid,order.c_id as cid,product.product as pname,`number`,amount,delivery,payment
+        from `order`
+        inner join product on `order`.p_id=product.p_id
+        where `order`.c_id=#{cid}
+    </select>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.igenerat.dao.JobDao">
+
+    <insert id="addJob">
+        insert into job (d_id,job,root,pay) values (#{did},#{job.name},#{job.root},#{job.pay})
+    </insert>
+    <update id="updateJobName">
+        update job set job= #{name} where j_id=#{jid}
+    </update>
+    <update id="updateJob">
+        update job set job= #{job.name},root= #{job.root}, pay= #{job.pay}, d_id= #{did} where j_id=#{job.id}
+    </update>
+    <select id="findJobsByDid" resultType="java.util.HashMap">
+        select j_id as id,d_id as did,job,root,pay from job
+        <where>
+            <if test="name!=null">
+                job like CONCAT('%',#{name},'%')
+            </if>
+            <if test="did!=null">
+                and d_id=#{did}
+            </if>
+        </where>
+    </select>
+</mapper>
